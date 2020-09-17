@@ -1,0 +1,220 @@
+﻿@model IEnumerable<FileSystem_Finance_Department_.Models.FileData>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<h2>File Data View</h2>
+
+@if (User.IsInRole("User"))
+{
+    @Html.ActionLink("Add New File", "Create")
+}
+
+<div class="container-fluid">
+
+    @using (Html.BeginForm("Index", "FileData", FormMethod.Post, new { enctype = "Multipart/Form-Data" }))
+    {
+        <div class="form-horizontal">
+
+            @if (User.IsInRole("Master") || User.IsInRole("Admin"))
+            {
+                <div class="form-group">
+                    <div class="col-md-6 input-group">
+
+                        <input type="text" name="searchtxt" class="form-control" placeholder="Enter Your Search Text Here" style="max-width:100%" />
+
+
+                        <input type="text" name="fiscalmonth" class="form-control" placeholder="Enter Fiscal Month" />
+
+
+                        @if (TempData["FiscalYear"] != null)
+                        {
+                            <input type="text" name="fiscalyear" class="form-control" value=@TempData["FiscalYear"] />
+                        }
+                        else
+                        {
+                            <input type="text" style="margin-left:9px" name="fiscalyear" class="form-control" placeholder="Enter Fiscal Year" />
+                        }
+
+                        <div>
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </div>
+
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+
+                    <div class="col-md-6">
+                        <label id="searchlbl">Search</label>
+                        <input type="text" name="searchtxt" class="form-control" placeholder="Enter Your Search Text Here" style="max-width:100%" />
+
+                        <label id="datelbl">Date</label>
+                        <input type="text" name="datetxt" class="form-control" placeholder="Enter Date Here" />
+                        <div>
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </div>
+                    </div>
+
+                </div>
+            }
+        </div>
+    }
+
+    <div class="col-md-12">
+        <table class="table table-bordered table-striped" style="text-align:left">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Filename)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Filenumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Subject)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Type)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Givennumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Pages)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Addressee)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Sectionoforigin)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Receivedby)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Pdfdirectory)
+                </th>
+                <th>
+
+                </th>
+
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Filename)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Filenumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Subject)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Givennumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Pages)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Addressee)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Sectionoforigin)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Receivedby)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.Pdfdirectory)*@
+                        @*@Html.ActionLink("Download Your File", "DownloadPDF", new { PDFFile = item.Pdfdirectory }, new { @target = "_blank" })*@
+                        @Html.ActionLink("Download Your File", "Download", new { fileName = item.Pdfdirectory })
+                    </td>
+                    <td>
+                        @Html.ActionLink("Update", "Index","FileDataDetail", new { filedataid = item.FileDataId },null) |
+                        @Html.ActionLink("Print Details To PDF", "Details", new { id = item.FileDataId }) |
+       
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+        @{
+            double totalpages = ViewBag.TotalPages;
+
+            if (totalpages > 1)
+            {
+                <ul class="pagination">
+
+                    @if (ViewBag.PageNumber == 1)
+                    {
+                        <li>
+                            @Html.ActionLink("Previous", "Index", new { PageNumber = ViewBag.PageNumber })
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            @Html.ActionLink("Previous", "Index", new { PageNumber = ViewBag.PageNumber - 1 })
+                        </li>
+                    }
+
+                    @for (int i = 1; i <= totalpages; i++)
+                    {
+
+                        if (i == ViewBag.PageNumber)
+                        {
+                            <li class="active">
+                                @Html.ActionLink(i.ToString(), "Index", new { PageNumber = i })
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                @Html.ActionLink(i.ToString(), "Index", new { PageNumber = i })
+                            </li>
+                        }
+                    }
+                    @if (ViewBag.PageNumber == totalpages)
+                {
+                        <li>
+                            @Html.ActionLink("Next", "Index", new { PageNumber = ViewBag.PageNumber })
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            @Html.ActionLink("Next", "Index", new { PageNumber = ViewBag.PageNumber + 1 })
+                        </li>
+                    }
+
+
+                </ul>
+            }
+
+        }
+    </div>
+
+</div>

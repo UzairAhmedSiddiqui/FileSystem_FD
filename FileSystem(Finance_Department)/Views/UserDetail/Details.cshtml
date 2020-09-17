@@ -1,0 +1,66 @@
+﻿@model FileSystem_Finance_Department_.Models.Login
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Login</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentSO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CurrentSO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PreviousSO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PreviousSO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dateofjoining)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dateofjoining)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

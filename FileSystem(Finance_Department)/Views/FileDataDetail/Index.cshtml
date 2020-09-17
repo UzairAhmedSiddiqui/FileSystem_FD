@@ -1,0 +1,52 @@
+﻿@model IEnumerable<FileSystem_Finance_Department_.Models.FileDataDetail>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create",new { id = Model.First().FileDataId})
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FileDataId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FilePath)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UploadTime)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FileDataId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FilePath)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UploadTime)
+        </td>
+        @*<td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.FileDataDetailId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.FileDataDetailId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.FileDataDetailId })
+        </td>*@
+    </tr>
+}
+
+</table>
