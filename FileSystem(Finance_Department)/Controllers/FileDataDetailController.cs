@@ -150,6 +150,12 @@ namespace FileSystem_Finance_Department_.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        public ActionResult Download(string path)
+        {
+            byte[] fileBytes = System.IO.File.ReadAllBytes(path);
+            var  a = new FileInfo(path).Name;
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet,a);
+        }
 
         protected override void Dispose(bool disposing)
         {
